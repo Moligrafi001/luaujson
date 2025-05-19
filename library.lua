@@ -1,0 +1,3 @@
+local luaujson = {}
+
+return luaujson
