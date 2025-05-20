@@ -29,16 +29,15 @@ function luaujson:Parse(req, res)
   if req.Url then
     req = request(req)
     if req.Sucess then
-      
+     if game:GetService("HttpService"):JSONDecode(req.Body)[res])() then
+      return game:GetService("HttpService"):JSONDecode(req.Body)[res])()
+     end
     else
       AdmMsg(3, "Request failed: " .. req.Url .. " | " .. req.StatusCode)
     end
   else
     AdmMsg(3, "Parse function missing URL param")
   end
-
-  Parsed = game:GetService("HttpService"):JSONDecode(response.Body)["script"]
-  return
 end
 
 -- Export Library
