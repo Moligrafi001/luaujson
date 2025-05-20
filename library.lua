@@ -1,5 +1,10 @@
 local luaujson = {}
 
+-- Settings
+local Settings = {
+  DebugMode = false
+}
+
 -- Local Functions
 local function AdmMsg(type, msg)
   if type == 1 then
@@ -16,6 +21,11 @@ local function AdmMsg(type, msg)
     elseif msg == 3 then
       error(".*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.")
     end
+  end
+end
+local function d()
+  if Settings.DebugMode then
+    return true
   end
 end
 local function ManualParse(body)
