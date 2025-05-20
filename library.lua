@@ -19,7 +19,103 @@ local function AdmMsg(type, msg)
   end
 end
 local function ManualParse(body)
-  -- aqui o parse manual
+    local pos = 1
+
+    local function skipWhitespace()
+        while body:sub(pos, pos):match("%s") do
+            pos = pos + 1
+        end
+    end
+
+    local function parseValue()
+        skipWhitespace()
+        local char = body:sub(pos, pos)
+
+        if char == '"' then
+            return parseString()
+        elseif char == '{' then
+            return parseObject()
+        elseif char == '[' then
+            return parseArray()
+        elseif body:sub(pos, pos + 3) == "true" then
+            pos = pos + 4
+            return true
+        elseif body:sub(pos, pos + 4) == "false" then
+            pos = pos + 5
+            return false
+        elseif body:sub(pos, pos + 3) == "null" then
+            pos = pos + 4
+            return nil
+        else
+            return parseNumber()
+        end
+    end
+
+    local function parseString()
+        pos = pos + 1 -- skip opening "
+        local start = pos
+        while body:sub(pos, pos) ~= '"' do
+            pos = pos + 1
+        end
+        local str = body:sub(start, pos - 1)
+        pos = pos + 1 -- skip closing "
+        return str
+    end
+
+    local function parseNumber()
+        local start = pos
+        while body:sub(pos, pos):match("[0-9+-.eE]") do
+            pos = pos + 1
+        end
+        local num = tonumber(body:sub(start, pos - 1))
+        return num
+    end
+
+    local function parseArray()
+        local result = {}
+        pos = pos + 1 -- skip [
+        skipWhitespace()
+        if body:sub(pos, pos) == "]" then
+            pos = pos + 1
+            return result
+        end
+        while true do
+            table.insert(result, parseValue())
+            skipWhitespace()
+            if body:sub(pos, pos) == "]" then
+                pos = pos + 1
+                break
+            end
+            pos = pos + 1 -- skip ,
+        end
+        return result
+    end
+
+    local function parseObject()
+        local result = {}
+        pos = pos + 1 -- skip {
+        skipWhitespace()
+        if body:sub(pos, pos) == "}" then
+            pos = pos + 1
+            return result
+        end
+        while true do
+            local key = parseString()
+            skipWhitespace()
+            pos = pos + 1 -- skip :
+            local value = parseValue()
+            result[key] = value
+            skipWhitespace()
+            if body:sub(pos, pos) == "}" then
+                pos = pos + 1
+                break
+            end
+            pos = pos + 1 -- skip ,
+        end
+        return result
+    end
+
+    return parseValue()
 end
 
 -- Public Functions
