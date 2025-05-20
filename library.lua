@@ -29,9 +29,11 @@ function luaujson:Parse(req, res)
   if req.Url then
     req = request(req)
     if req.Success then
-     if game:GetService("HttpService"):JSONDecode(req.Body)[res] then
-      return game:GetService("HttpService"):JSONDecode(req.Body)[res]
-     end
+      if game:GetService("HttpService"):JSONDecode(req.Body)[res] then
+        return game:GetService("HttpService"):JSONDecode(req.Body)[res]
+      else
+        -- decodificar o json de outra forma e o retornar, seria possivel?
+      end
     else
       AdmMsg(3, "Request failed: " .. req.Url or "NO URL" .. " | " .. req.StatusCode or "NO CODE")
     end
