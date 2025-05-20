@@ -27,6 +27,7 @@ local function d()
   if Settings.DebugMode then
     return true
   end
+  returnn false
 end
 local function ManualParse(body)
     local pos = 1
