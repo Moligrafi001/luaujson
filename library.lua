@@ -131,9 +131,11 @@ end
 
 -- Public Functions
 function luaujson:Start()
-  AdmMsg(9, 1)
-  AdmMsg(1, "Library started successfully")
-  AdmMsg(9, 1)
+  if d() then
+    AdmMsg(9, 1)
+    AdmMsg(1, "Library started successfully")
+    AdmMsg(9, 1)
+  end
 end
 function luaujson:Parse(req, res)
   if req.Url then
