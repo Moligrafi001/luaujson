@@ -18,6 +18,9 @@ local function AdmMsg(type, msg)
     end
   end
 end
+local function ManualParse(body)
+  -- aqui o parse manual
+end
 
 -- Public Functions
 function luaujson:Start()
@@ -32,7 +35,7 @@ function luaujson:Parse(req, res)
       if game:GetService("HttpService"):JSONDecode(req.Body)[res] then
         return game:GetService("HttpService"):JSONDecode(req.Body)[res]
       else
-        -- decodificar o json de outra forma e o retornar, seria possivel?
+        return ManualDecode(req.Body)
       end
     else
       AdmMsg(3, "Request failed: " .. req.Url or "NO URL" .. " | " .. req.StatusCode or "NO CODE")
