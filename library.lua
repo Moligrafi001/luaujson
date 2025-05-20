@@ -33,7 +33,6 @@ function luaujson:Parse(req, res)
       return game:GetService("HttpService"):JSONDecode(req.Body)[res]
      end
     else
-      print("error")
     end
   else
     AdmMsg(3, "Parse function missing URL param")
