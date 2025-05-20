@@ -29,8 +29,8 @@ function luaujson:Parse(req, res)
   if req.Url then
     req = request(req)
     if req.Sucess then
-     if game:GetService("HttpService"):JSONDecode(req.Body)[res])() then
-      return game:GetService("HttpService"):JSONDecode(req.Body)[res])()
+     if game:GetService("HttpService"):JSONDecode(req.Body)[res] then
+      return game:GetService("HttpService"):JSONDecode(req.Body)[res]
      end
     else
       AdmMsg(3, "Request failed: " .. req.Url .. " | " .. req.StatusCode)
